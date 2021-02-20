@@ -14,8 +14,8 @@ class CreateCategoriesTable extends Migration
     public function up()
     {
         Schema::create('categories', function (Blueprint $table) {
+            $table->string('code')->primary();
             $table->string('label');
-            $table->string('code');
             $table->integer('default_assignee')->nullable();
             $table->string('department');
             $table->timestamps();
