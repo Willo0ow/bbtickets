@@ -19,12 +19,12 @@ class CreateMessagesTable extends Migration
             $table->integer('ticket');
             $table->string('content');
             $table->integer('user');
-            $table->integer('recepient');
+            $table->integer('recepient')->nullable();
             $table->string('status');
-            $table->date('read_date');
-            $table->integer('response_to');
-            $table->boolean('notification_sent');
-            $table->string('department');
+            $table->date('read_date')->nullable();
+            $table->integer('response_to')->nullable();
+            $table->boolean('notification_sent')->nullable();
+            $table->string('department')->nullable();
             $table->timestamps();
         });
     }
