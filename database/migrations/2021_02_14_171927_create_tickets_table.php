@@ -18,13 +18,13 @@ class CreateTicketsTable extends Migration
             $table->string('title');
             $table->string('description');
             $table->string('department');
-            $table->string('user');
+            $table->integer('user');
             $table->string('category');
-            $table->string('assignee');
-            $table->string('status');
-            $table->string('priority');
-            $table->string('estimated_close_date');
-            $table->string('close_date');
+            $table->integer('assignee');
+            $table->integer('status');
+            $table->integer('priority');
+            $table->date('estimated_close_date');
+            $table->date('close_date');
             $table->timestamps();
         });
     }

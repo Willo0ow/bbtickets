@@ -15,12 +15,12 @@ class CreateTlogsTable extends Migration
     {
         Schema::create('tlogs', function (Blueprint $table) {
             $table->id();
-            $table->string('ticket');
+            $table->integer('ticket');
             $table->string('variable');
             $table->string('value');
-            $table->string('correction');
+            $table->boolean('correction');
             $table->string('note');
-            $table->string('user');
+            $table->integer('user');
             $table->timestamps();
         });
     }

@@ -16,14 +16,14 @@ class CreateMessagesTable extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('ticket');
+            $table->integer('ticket');
             $table->string('content');
-            $table->string('user');
-            $table->string('recepient');
+            $table->integer('user');
+            $table->integer('recepient');
             $table->string('status');
-            $table->string('read_date');
-            $table->string('response_to');
-            $table->string('notification_sent');
+            $table->date('read_date');
+            $table->integer('response_to');
+            $table->boolean('notification_sent');
             $table->string('department');
             $table->timestamps();
         });
