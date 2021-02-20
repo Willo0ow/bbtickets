@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCategoriesTable extends Migration
+class CreateTlogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
-            $table->string('label');
-            $table->string('code');
-            $table->string('default_assignee');
-            $table->string('department');
+        Schema::create('tlogs', function (Blueprint $table) {
+            $table->id();
+            $table->string('ticket');
+            $table->string('variable');
+            $table->string('value');
+            $table->string('correction');
+            $table->string('note');
+            $table->string('user');
             $table->timestamps();
         });
     }
@@ -29,6 +32,6 @@ class CreateCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('tlogs');
     }
 }

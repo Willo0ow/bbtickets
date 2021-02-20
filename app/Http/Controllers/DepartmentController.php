@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Assignee;
+use App\Models\Department;
 use Illuminate\Http\Request;
 
-class AssigneeController extends Controller
+class DepartmentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class AssigneeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Assignee  $assignee
+     * @param  \App\Models\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function show(Assignee $assignee)
+    public function show(Department $department)
     {
         //
     }
@@ -52,10 +52,10 @@ class AssigneeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Assignee  $assignee
+     * @param  \App\Models\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function edit(Assignee $assignee)
+    public function edit(Department $department)
     {
         //
     }
@@ -64,10 +64,10 @@ class AssigneeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Assignee  $assignee
+     * @param  \App\Models\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Assignee $assignee)
+    public function update(Request $request, Department $department)
     {
         //
     }
@@ -75,10 +75,10 @@ class AssigneeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Assignee  $assignee
+     * @param  \App\Models\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Assignee $assignee)
+    public function destroy(Department $department)
     {
         //
     }
