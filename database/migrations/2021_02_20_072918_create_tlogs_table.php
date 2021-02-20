@@ -18,8 +18,8 @@ class CreateTlogsTable extends Migration
             $table->integer('ticket');
             $table->string('variable');
             $table->string('value');
-            $table->boolean('correction');
-            $table->string('note');
+            $table->boolean('correction')->nullable();
+            $table->string('note')->nullable();
             $table->integer('user');
             $table->timestamps();
         });

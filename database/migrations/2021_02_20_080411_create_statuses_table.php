@@ -17,6 +17,7 @@ class CreateStatusesTable extends Migration
             $table->id();
             $table->string('code');
             $table->string('label');
+            $table->string('type');
             $table->timestamps();
         });
     }
