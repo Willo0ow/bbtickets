@@ -35,7 +35,7 @@ class StatusController extends Controller
      */
     public function store(Request $request)
     {
-        Status::create($request->all());
+        return Status::create($request->all());
     }
 
     /**
@@ -81,5 +81,9 @@ class StatusController extends Controller
     public function destroy(Status $status)
     {
         return Status::find($status)->delete();
+    }
+    public function findByType($type)
+    {
+        return Status::where('type', $type)->get();
     }
 }
