@@ -47,7 +47,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return Category::where('code', $category)->first();
+        return Category::find($category)->first();
     }
 
     /**
@@ -70,7 +70,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        return Category::where('code', $category)->update($request->all());
+        return Category::find($category)->update($request->all());
     }
 
     /**
@@ -82,7 +82,7 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $this->removeCategoryFromTickets($category);
-        return Category::where('code', $category)->delete();
+        return Category::find($category)->delete();
     }
     public function removeCategoryFromTickets($category){
         Ticket::where('category', $category)->update(['category'=>null]);
