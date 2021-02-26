@@ -82,7 +82,7 @@ class StatusController extends Controller
     {
         return Status::find($status)->delete();
     }
-    public function findByType($type)
+    public function retrieveByType($type)
     {
         return Status::where('type', $type)->get();
     }

@@ -85,11 +85,11 @@ class MessageController extends Controller
     {
         return Message::find($message)->update(['sattus'=>'deleted']);
     }
-    public function findByTicket($ticket)
+    public function retrieveByTicket($ticket)
     {
         return Message::where('ticket', $ticket)->orWhere('response_to', $ticket)->get();
     }
-    public function findByRecipent($recipient)
+    public function retrieveByRecipent($recipient)
     {
         return Message::where('recipient', $recipient)->get();
     }

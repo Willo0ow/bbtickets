@@ -27,7 +27,5 @@ class StatusSeeder extends Seeder
         Status::updateOrCreate(['label' => 'Nie dotarła do odbiorcy','code'=>'sent_failed', 'type'=>'message']);
         Status::updateOrCreate(['label' => 'Przeczytana','code'=>'read', 'type'=>'message']);
         Status::updateOrCreate(['label' => 'Otrzymała odpowiedź','code'=>'answered', 'type'=>'message']);
-        Status::updateOrCreate(['label' => 'Usunięta','code'=>'deleted', 'type'=>'message']);
-        Status::updateOrCreate(['label' => 'Zarchiwowana','code'=>'archived', 'type'=>'message']);
     }
 }
