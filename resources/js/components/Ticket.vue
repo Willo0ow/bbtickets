@@ -1,77 +1,138 @@
 <template>
-        <div class="card main-card">
-    <div class="container-fluid main-box">
-                    <div class="card-header main-header d-flex align-items-end">
-                        <div class="font-weight-bold card-title-main-btn">Ticket</div>
-                        <div class="card-title-sub-btn font-weight-light fs-6">Wszyskie</div>
-                        <div class="card-title-sub-btn">Moje</div>
-                        <div class="card-title-sub-btn">Nowe</div>
-                        <div class="card-title-sub-btn search-input ml-auto">
-                            <div class="input-group">
-                                <input v-model="search" type="text" class="form-control" placeholder="np. Brak okucia..." aria-label="Szukaj" aria-describedby="basic-addon1">
-                                <div class="input-group-append">
-                                    <span class="input-group-text">
-                                        <img src="/images/magnify.png" alt="">
-                                    </span>
-                                </div>
-                            </div>
-                            
+    <div class="card main-card">
+        <div class="container-fluid main-box">
+            <div class="card-header main-header d-flex align-items-end">
+                <div class="font-weight-bold card-title-main-btn">BBTickets</div>
+                <div class="card-title-sub-btn" :class="{'active-section': $route.path === section.path}" @click="redirectTo(section.path)" v-for="(section, idx) of sections" :key="idx">{{section.label}}</div>
+                <div class="card-title-sub-btn search-input ml-auto">
+                    <div class="input-group">
+                        <input v-model="search" type="text" class="form-control" placeholder="np. Brak okucia..." aria-label="Szukaj" aria-describedby="basic-addon1">
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                                <img src="/images/magnify.png" alt="">
+                            </span>
                         </div>
                     </div>
+                    
+                </div>
+            </div>
 
-                    <div class="card-body">
-                        <div class="container sections-container">
-                            <div class="row">
-                                <div class="col-2" v-for="(category, id) of categories" :key="id">
-                                    <div class="card section-card" :id="category.name">
-                                        <div class="card-header">{{category.label}}</div>
-                                        <div class="card-body">
-                                            <div class="card ticket-card" v-for="n in category.tickets" :key="n+'ticket'+id">
-                                                <div class="card-header">Temat</div>
-                                                <div class="card-body"></div>
-                                            </div>
-                                        </div>
+            <div class="card-body">
+                <div class="container sections-container">
+                    <div class="row">
+                        <div class="col-6" >
+                            <div class="card section-card">
+                                <div class="card-header">Formularz Zgłoszeniowy</div>
+                                <div class="card-body">
+                                    <div class="card ticket-card" >
+                                        <label for="title">Temat</label>
+                                        <input type="text" name="title" id="title" v-model="ticketForm.title">
+                                        <label for="descriptiom">Opis</label>
+                                        <textarea type="text" name="title" id="title" v-model="ticketForm.description"></textarea>
+                                        <label for="department">Dział</label>
+                                        <select name="department" id="department" v-model="ticketForm.department">
+                                            <option v-for="(department, id) of departments" :key="id" :value="department.code" :label="department.label"></option>
+                                        </select>
+                                        <label for="category">Kategoria</label>
+                                        <select name="category" id="category" v-model="ticketForm.category">
+                                            <option v-for="(category, id) of filteredCategories" :key="id" :value="category.code" :label="category.label"></option>
+                                        </select>
+                                        <button @click="saveTicket">Wyślij</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 
 <script>
-import magnify from '../../images/magnify.png'
+import axios from '../axios'
+import sections from '../mixins/sections'
     export default {
+        mixins: [sections],
         data(){
             return{
                 search: '',
-                departmesnts: null,
-                categories:[
-                    {label:'Problem BBSoftware', code:'bbsoftware'},
-                    {label:'Potrzeba zmiany technologicznej', code:'tech_changes'},
-                    {label:'Problem z winpro 10', code:'winX'},
-                    {label:'Błędy technologiczne w zamówieniu', name:'incorrect_tech'},
-                    {label:'Problem z zamówieniem', name:'orders'},
-                    {label:'Potrzebny kontakt z klientem', name:'client'}
-                ],
+                departments: null,
+                categories: null,
                 ticketForm:{
                     title: '',
                     description: '',
                     department: null,
-                    //user: null,
                     category: null,
-                    asignee: null,
-                    status: null,
+                    assignee: null,
+                    status: 'registered',
                     priority: null,
-                    estimated_close_date: null,
-                    close_date: null
                 }
             }
         },
-        mounted() {
-            console.log('Component mounted.')
+        computed: {
+            filteredCategories(){
+                let set = this.categories
+                if(this.ticketForm.department){
+                    set = this.categories.filter((category)=>category.department === this.ticketForm.department)
+                }
+                return set
+            }
+        },
+        methods:{
+            async retrieveDepartments(){
+                let res = await axios.get('/department')
+                this.departments = res.data
+            },
+             async retrieveCategories(){
+                let res = await axios.get('/category')
+                this.categories = res.data
+            },
+            async saveTicket(){
+                if(this.checkRequiredInputs()){
+                    alert('Błąd! Brakuje wymaganych informacji. Uzupełnij dane.')
+                } else {
+                    this.addAssignee()
+                    await this.storeTicket()
+                }
+            },
+            checkRequiredInputs(){
+                return ['title', 'description', 'department', 'category'].some((info)=>!this.ticketForm[info])
+            },
+            addAssignee(){
+                let categoryObject = this.categories.find((cat)=>cat.code === this.ticketForm.category)
+                this.ticketForm.assignee = categoryObject.default_assignee
+            },
+            prepareTlog(){
+                let tlog = {
+                    variable: 'status',
+                    value: 'registered',
+                    correction: false,
+                }
+                return tlog
+            },
+            async storeTicket(){
+                try{
+                    let res = await axios.post('/ticket', {ticket: this.ticketForm, tlog: this.prepareTlog()})
+                    alert('Ticket został pomyśnie zapisany.')
+                } catch (err){
+                    console.log(err);
+                }
+            },
+            resetTicketForm(){
+                this.ticketForm.title = ''
+                this.ticketForm.description = ''
+                this.ticketForm.department = null
+                this.ticketForm.category = null
+                this.ticketForm.assignee = null
+                this.ticketForm.status = null
+                this.ticketForm.priority = null
+            }
+        },
+        async created() {
+            await this.retrieveDepartments()
+            await this.retrieveCategories()
         }
     }
 </script>

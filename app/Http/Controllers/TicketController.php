@@ -43,7 +43,8 @@ class TicketController extends Controller
 
         $storedTicket =  Ticket::create($forms['ticket']);
         if($storedTicket){
-            Tlog::create($form['tlog']);
+            $forms['tlog']['ticket'] = $storedTicket['id'];
+            Tlog::create($forms['tlog']);
         }
         return $storedTicket;
     }

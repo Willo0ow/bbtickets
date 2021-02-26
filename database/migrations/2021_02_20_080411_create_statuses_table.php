@@ -17,6 +17,7 @@ class CreateStatusesTable extends Migration
             $table->string('code')->primary();
             $table->string('label');
             $table->string('type');
+            $table->integer('sequence');
             $table->timestamps();
         });
     }
