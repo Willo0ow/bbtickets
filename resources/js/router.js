@@ -3,8 +3,8 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-import example from './components/ExampleComponent'
-
+import ticketBoard from './components/TicketBoard'
+import ticket from './components/Ticket'
 
 export default new VueRouter({
     mode:'history',
@@ -12,7 +12,11 @@ export default new VueRouter({
     routes:[
         {
             path:'',
-            component: example
+            component: ticketBoard
+        },
+        {
+            path:'/ticket/:type',
+            component: ticket
         }
     ]
 })

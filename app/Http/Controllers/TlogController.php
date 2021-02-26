@@ -82,4 +82,9 @@ class TlogController extends Controller
     {
         //
     }
+
+    public function retrieveTicketLogs($ticket)
+    {
+        return Tlog::where('ticket', $ticket)->get();
+    }
 }

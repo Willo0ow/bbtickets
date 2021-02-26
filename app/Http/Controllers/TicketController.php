@@ -105,12 +105,14 @@ class TicketController extends Controller
         }
         return $deletedTicket;
     }
+
     public function assignUserToForms($requestData){
         $user = Auth::user()->id;
         $requestData['ticket']['user'] = $user;
         $requestData['tlog']['user'] = $user;
         return $requestData;
     }
+    
     public function retrieveByStatus($status){
         return Ticket::where('status', $status)->get();
     }
