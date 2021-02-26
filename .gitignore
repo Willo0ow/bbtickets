@@ -6,6 +6,7 @@
 /public/mix-manifest.json
 /public/fonts
 /storage/*.key
+/storage/clockwork
 /vendor
 /coverage
 .env
