@@ -14,7 +14,7 @@ class MessageController extends Controller
      */
     public function index()
     {
-        //
+        return Message::all();
     }
 
     /**
@@ -35,7 +35,10 @@ class MessageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $form = $request->all();
+        $user = Auth::user()->id;
+        $form['user'] = $user;
+        return Message::crerate($form);
     }
 
     /**
@@ -46,7 +49,7 @@ class MessageController extends Controller
      */
     public function show(Message $message)
     {
-        //
+        return Message::find($message)->first();
     }
 
     /**
@@ -80,6 +83,14 @@ class MessageController extends Controller
      */
     public function destroy(Message $message)
     {
-        //
+        return Message::find($message)->update(['sattus'=>'deleted']);
+    }
+    public function retrieveByTicket($ticket)
+    {
+        return Message::where('ticket', $ticket)->orWhere('response_to', $ticket)->get();
+    }
+    public function retrieveByRecipent($recipient)
+    {
+        return Message::where('recipient', $recipient)->get();
     }
 }

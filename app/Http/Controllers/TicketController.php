@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Ticket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Tlog;
 
 class TicketController extends Controller
 {
@@ -14,7 +16,7 @@ class TicketController extends Controller
      */
     public function index()
     {
-        //
+        return Ticket::all();
     }
 
     /**
@@ -35,7 +37,15 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = Auth::user()->id;
+        $requestData = $request->all();
+        $forms = $this->assignUserToForms($requestData);
+
+        $storedTicket =  Ticket::create($forms['ticket']);
+        if($storedTicket){
+            Tlog::create($form['tlog']);
+        }
+        return $storedTicket;
     }
 
     /**
@@ -46,7 +56,7 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-        //
+        return Ticket::find($ticket)->first();
     }
 
     /**
@@ -69,7 +79,15 @@ class TicketController extends Controller
      */
     public function update(Request $request, Ticket $ticket)
     {
-        //
+        $user = Auth::user()->id;
+        $requestData = $request->all();
+        $forms = $this->assignUserToForms($requestData);
+
+        $updatedTicket =  Ticket::find($ticket)->update($forms['ticket']);
+        if($updatedTicket){
+            Tlog::create($forms['tlog']);
+        }
+        return $updatedTicket;
     }
 
     /**
@@ -80,6 +98,20 @@ class TicketController extends Controller
      */
     public function destroy(Ticket $ticket)
     {
-        //
+        $tlog = array('ticket' => $ticket, 'variable'=>'status', 'value'=>'deleted', 'user'=>$user );
+        $deletedTicket =  Ticket::find($ticket)->delete();
+        if($deletedTicket){
+            Tlog::create($tlog);
+        }
+        return $deletedTicket;
+    }
+    public function assignUserToForms($requestData){
+        $user = Auth::user()->id;
+        $requestData['ticket']['user'] = $user;
+        $requestData['tlog']['user'] = $user;
+        return $requestData;
+    }
+    public function retrieveByStatus($status){
+        return Ticket::where('status', $status)->get();
     }
 }

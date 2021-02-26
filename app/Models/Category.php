@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'code';
+    protected $keyType = 'string';
+    public $incrementing = false;
+    protected $guarded = ['code'];
 }

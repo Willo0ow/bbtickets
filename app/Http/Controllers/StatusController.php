@@ -14,7 +14,7 @@ class StatusController extends Controller
      */
     public function index()
     {
-        //
+        return Status::all();
     }
 
     /**
@@ -35,7 +35,7 @@ class StatusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Status::create($request->all());
     }
 
     /**
@@ -46,7 +46,7 @@ class StatusController extends Controller
      */
     public function show(Status $status)
     {
-        //
+        return Status::find($status)->first();
     }
 
     /**
@@ -69,7 +69,7 @@ class StatusController extends Controller
      */
     public function update(Request $request, Status $status)
     {
-        //
+        return Request::find($status)->update($request->all());
     }
 
     /**
@@ -80,6 +80,10 @@ class StatusController extends Controller
      */
     public function destroy(Status $status)
     {
-        //
+        return Status::find($status)->delete();
+    }
+    public function retrieveByType($type)
+    {
+        return Status::where('type', $type)->get();
     }
 }

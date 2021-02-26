@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\Tickets;
 
 class CategoryController extends Controller
 {
@@ -14,7 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        return Category::all();
     }
 
     /**
@@ -35,7 +36,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Category::create($request->all());
     }
 
     /**
@@ -46,7 +47,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        return Category::find($category)->first();
     }
 
     /**
@@ -69,7 +70,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        return Category::find($category)->update($request->all());
     }
 
     /**
@@ -80,6 +81,13 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $this->removeCategoryFromTickets($category);
+        return Category::find($category)->delete();
+    }
+    public function removeCategoryFromTickets($category){
+        Ticket::where('category', $category)->update(['category'=>null]);
+    }
+    public function retrieveDepartmentCategories($department){
+        return Category::where('department', $department)->get();
     }
 }
