@@ -6,6 +6,7 @@ use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tlog;
+use Illuminate\Support\Facades\DB;
 
 class TicketController extends Controller
 {
@@ -116,5 +117,22 @@ class TicketController extends Controller
     
     public function retrieveByStatus($status){
         return Ticket::where('status', $status)->get();
+    }
+
+    public function retrieveUserTickets($user){
+        $userTickets = DB::table('tickets')
+        ->join('departments', 'departments.code', '=', 'tickets.department')
+        ->join('statuses', 'statuses.code', '=', 'tickets.status')
+        ->join('categories', 'categories.code', '=', 'tickets.category')
+        ->join('users', 'users.id', '=', 'tickets.assignee')
+        ->where('user', $user)
+        ->select('tickets.*', 'departments.label as dept_label', 'statuses.label as stat_label', 'statuses.sequence', 'categories.label as cat_label', 'users.name as assignee_name')
+        ->orderBy('tickets.created_at', 'asc')
+        ->get();
+        return $userTickets;
+    }
+
+    public function retrieveUser(){
+        return Auth::user();
     }
 }

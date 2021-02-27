@@ -35,8 +35,10 @@ Route::get('/api/recepientmessages/{recepient}', [MessageController::class, 'ret
 Route::resource('/api/status', StatusController::class);
 Route::get('/api/typestatuses/{type}', [StatusController::class, 'retrieveByType']);
 Route::resource('/api/ticket', TicketController::class);
+Route::get('/api/usertickets/{user}', [TicketController::class, 'retrieveUserTickets']);
 Route::get('/api/statustickets/{status}', [TicketController::class, 'retrieveByStatus']);
 Route::get('/api/ticketlogs', [TlogController::class, 'retrieveTicketLogs']);
+Route::get('/api/userdata', [TicketController::class, 'retrieveUser']);
 ////
 
 Route::get('/{any}',function (){

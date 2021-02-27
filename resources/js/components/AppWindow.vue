@@ -1,5 +1,5 @@
 <template>
-    <div class="card main-card">
+    <div class="card main-card" v-if="user">
         <div class="container-fluid main-box">
             <div class="card-header main-header d-flex align-items-end">
                 <div class="font-weight-bold card-title-main-btn">BBTickets</div>
@@ -16,8 +16,7 @@
                     
                 </div>
             </div>
-
-            <div class="card-body">
+            <div class="card-body scrollable-body">
                 <div class="container sections-container">
                     <router-view></router-view>
                 </div>
@@ -30,25 +29,24 @@
 <script>
 import axios from '../axios'
 import sections from '../mixins/sections'
+import statuses from '../mixins/statuses'
     export default {
-        mixins: [sections],
+        mixins: [sections, statuses],
         data(){
             return{
                 search: '',
-                statuses: null,
-                categories:[
-                    {label:'Zgłoszone', name:'registered', tickets: 38},
-                    {label:'Zweryfikowane', name:'verified', tickets: 50},
-                    {label:'W Trakcie', name:'in_progress', tickets: 45},
-                    {label:'Do Konsultacji', name:'review', tickets: 28},
-                    {label:'Wstrzymane', name:'on_hold', tickets: 17},
-                    {label:'Ukończone', name:'closed', tickets: 20}
-                ]
+                user: null
             }
         },
-        async created() {
-            let res = await axios.get('/typestatuses/ticket')
-            this.statuses = res.data
+        methods:{
+            async retrieveUser(){
+                let res = await axios.get('/userdata')
+                this.user = res.data
+            }
+        },
+        async created(){
+            await this.retrieveUser()
+            
         }
     }
 </script>
@@ -63,9 +61,9 @@ import sections from '../mixins/sections'
     height: 96%;
     margin: 2vh;
     border-radius: 20px;
-    background-image:radial-gradient(rgb(77, 150, 179),rgba(44, 62, 80,1)) ;
+    /* background-image:radial-gradient(rgb(77, 150, 179),rgba(44, 62, 80,1)) ; */
     /* background:linear-gradient(145deg, #97b4c0,#396374, #2c3e50); */
-/*     background: linear-gradient(145deg, #f2f8f9, #f3f9fb); */
+    background: linear-gradient(145deg, #f2f8f9, #f3f9fb);
     box-shadow:  20px 20px 55px #afcad6,
              -20px -20px 55px #cddbe4;
     border: none;
@@ -78,6 +76,10 @@ import sections from '../mixins/sections'
     background: #f5fafb;
     /* background-image:radial-gradient(rgb(57, 99, 116),rgba(44, 62, 80,1)) ; */
     box-shadow:  0 0 5px #bebebe;
+}
+.scrollable-body{
+    overflow-y: scroll;
+    max-height: 90vh;
 }
 .card-title-main-btn{
     font-weight: bolder;
@@ -92,9 +94,8 @@ import sections from '../mixins/sections'
 .search-input .form-control{
     border-radius: 20px;
     border: none;
-    background:   #f3f3f3;
-    box-shadow: inset 5px 5px 3px #dadada,
-            inset -5px -5px 3px #f3f3f3;
+    background:   #f9fcfd;
+    box-shadow:  inset 3px 3px 3px #dde3e6, inset 0px -3px 3px #f2f5f9;
 }
 .input-group-append{
     border-radius: 0px 50px 50px 0px;

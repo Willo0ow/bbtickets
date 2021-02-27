@@ -54,57 +54,45 @@ import sections from '../mixins/sections'
 }
 #registered{
     background-image:linear-gradient(145deg, #f5fafb, #dce4e6);
-    box-shadow: inset 3px 3px 12px #5d6d70,
-    inset -3px -3px 12px #5d6d70;
+        box-shadow: inset 3px 3px 6px #c5ccce, inset -3px -3px 6px #c1cfd2;
 }
 #registered .ticket-card{
-        box-shadow:  5px 5px 10px #97a6ad,
-                -3px -3px 10px #fbfbfb;
+        box-shadow:  5px 5px 5px #bfcdd4, -2px -3px 5px #dfe7ef;
 }
 #verified{
-    background-image:linear-gradient(145deg, #9fcfe6, #489ac0);
-    box-shadow: inset 3px 3px 12px #28566b,
-    inset -3px -3px 12px #28566b;
+    background-image:linear-gradient(145deg, #d7e8f1, #b0d6e8);
+        box-shadow: inset 3px 3px 6px #acccda, inset -3px -3px 6px #a7cada;
 }
 #verified .ticket-card{
-        box-shadow:  5px 5px 10px #5a899e,
-                -3px -3px 10px #b1dbee;
+        box-shadow: 5px 5px 5px #a0c7d8, -2px -3px 5px #d5e8f1;
 }
 #in_progress{
-    background-image:linear-gradient(145deg, #bda4da, #9969cf);
-    box-shadow: inset 3px 3px 12px #604482,
-    inset -3px -3px 12px #604482;
+    background-image:linear-gradient(145deg,  #e6dcf1, #d0bee4);
+        box-shadow: inset 3px 3px 5px #bca9d2, inset -3px -3px 5px #b6a3ce
 }
 #in_progress .ticket-card{
-        box-shadow:  5px 5px 10px #795c99,
-                -3px -3px 10px #cab6e0;
+        box-shadow:   5px 5px 5px #c4ace0, -2px -3px 5px #d3c4e4;
 }
 #review{
-    background-image:linear-gradient(145deg, #eedea8, #caac47);
-    box-shadow: inset 3px 3px 12px #645627,
-    inset -3px -3px 12px #645627;
+    background-image:linear-gradient(145deg,  #ece6d1, #e6d9af);
+        box-shadow: inset 3px 3px 6px #d8c793, inset -3px -3px 6px #dcce9b;
 }
 #review .ticket-card{
-        box-shadow:  5px 5px 10px #b18f1d,
-                -3px -3px 10px #f3e3ad;
+        box-shadow: 5px 5px 5px #d8c892, -3px -3px 5px #e6dcb9;
 }
 #on_hold{
-    background-image:linear-gradient(145deg, #f5c7c7, #e66767);
-    box-shadow: inset 3px 3px 12px #6b2828,
-    inset -3px -3px 12px #6b2828;
+    background-image:linear-gradient(145deg, #efdede, #e6b8b8);
+        box-shadow: inset 3px 3px 6px #bd8b8b, inset -3px -3px 6px #c7a3a3
 }
 #on_hold .ticket-card{
-        box-shadow:  5px 5px 10px #bd6a6a,
-                -3px -3px 10px #f1d1d1;
+        box-shadow:  5px 5px 5px #dcb8b8, -3px -3px 5px #dcb8b8;
 }
 #closed{
-    background-image:linear-gradient(145deg, #a5efc5, #60b585);
-    box-shadow: inset 3px 3px 12px #389c63,
-    inset -3px -3px 12px #3d654e;
+    background-image:linear-gradient(145deg, #ddefe5, #b1e0c6);
+    box-shadow: inset 3px 3px 6px #8ac1a2, inset -3px -3px 6px #8ac1a2
 }
 #closed .ticket-card{
-        box-shadow:  5px 5px 10px #269455,
-                -3px -3px 10px #bbf9d4;
+        box-shadow: 5px 5px 5px #a3d8b9, -2px -3px 5px #bde8cf;
 }
 .section-card>.card-header{
     padding: 10px;
@@ -123,7 +111,7 @@ import sections from '../mixins/sections'
     text-align: start;
     border:none;
     border-radius: 10px;
-    background: linear-gradient(150deg, #fcfcfc, #fcfcfc);
+    background: linear-gradient(150deg,#f1f7fb, #fbfdff);
 /*     box-shadow:  5px 5px 10px #bdbdbd,
                 -3px -3px 10px #f5f5f5; */
     margin: 10px 0;

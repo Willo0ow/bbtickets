@@ -1,13 +1,17 @@
 
 export default {
-    data(){
-        return {
-            sections : [
-                {label: 'Wszystkie', code: 'all', path:'/'},
-                {label: 'Moje', code: 'user-tickets', path:'/usertickets'},
-                {label: 'Nowy', code: 'new-ticket', path: '/ticket/new'}
-            ]
+
+    computed: {
+        sections () {
+            if(this.user){
+                return [
+                    {label: 'Wszystkie', code: 'all', path:'/'},
+                    {label: 'Moje', code: 'user-tickets', path:`/tickets/${this.user.id}`},
+                    {label: 'Nowy', code: 'new-ticket', path: '/ticket/new'}
+                ]
+            }
         }
+
     },
     methods:{
         redirectTo(path){
