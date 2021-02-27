@@ -16,7 +16,6 @@
                     
                 </div>
             </div>
-
             <div class="card-body">
                 <div class="container sections-container">
                     <router-view></router-view>
@@ -62,9 +61,9 @@ import statuses from '../mixins/statuses'
     height: 96%;
     margin: 2vh;
     border-radius: 20px;
-    background-image:radial-gradient(rgb(77, 150, 179),rgba(44, 62, 80,1)) ;
+    /* background-image:radial-gradient(rgb(77, 150, 179),rgba(44, 62, 80,1)) ; */
     /* background:linear-gradient(145deg, #97b4c0,#396374, #2c3e50); */
-/*     background: linear-gradient(145deg, #f2f8f9, #f3f9fb); */
+    background: linear-gradient(145deg, #f2f8f9, #f3f9fb);
     box-shadow:  20px 20px 55px #afcad6,
              -20px -20px 55px #cddbe4;
     border: none;
