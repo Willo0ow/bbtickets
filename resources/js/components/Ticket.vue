@@ -114,42 +114,6 @@ import sections from '../mixins/sections'
     }
 </script>
 <style scoped>
-.main-box{
-    margin: unset;
-    padding: unset;
-    height: 100%;
-    width: 100%;
-}
-.main-card{
-    height: 96%;
-    margin: 2vh;
-    border-radius: 20px;
-    background-image:radial-gradient(rgb(77, 150, 179),rgba(44, 62, 80,1)) ;
-    /* background:linear-gradient(145deg, #97b4c0,#396374, #2c3e50); */
-/*     background: linear-gradient(145deg, #f2f8f9, #f3f9fb); */
-    box-shadow:  20px 20px 55px #afcad6,
-             -20px -20px 55px #cddbe4;
-    border: none;
-    overflow: hidden;
-}
-.main-header{
-    border-bottom: none;
-    border-top-right-radius: 2%;
-    border-top-left-radius: 2%;
-    background: #f5fafb;
-    /* background-image:radial-gradient(rgb(57, 99, 116),rgba(44, 62, 80,1)) ; */
-    box-shadow:  0 0 5px #bebebe;
-}
-.card-title-main-btn{
-    font-weight: bolder;
-    font-size: 1rem;
-    margin-right: 10px;
-}
-.card-title-sub-btn{
-    font-weight: lighter;
-    font-size: 0.9rem;
-    margin-right: 10px;
-}
 #form-box .form-control, #form-box select{
     border-radius: 20px;
     border: none;
@@ -161,23 +125,14 @@ import sections from '../mixins/sections'
     min-height: 25px;
     padding: 3px  5px;
 }
-.input-group-append{
-    border-radius: 0px 50px 50px 0px;
-    overflow: hidden;
-}
 .input-group-text{
     padding: 0;
     border: unset;
-}
-.input-group-append img{
-    height: 50%;
-    margin-left: 10px;
 }
 .sections-container{
     max-width: 1800px;
 }
 .section-card{
-    height: 100%;
     padding: 5px;
     text-align: center;
     border:none;
@@ -213,12 +168,6 @@ import sections from '../mixins/sections'
     border:none;
     margin: 10px 0;
     color: #707275;
-    }
-.ticket-card .card-header{
-    background: transparent;
-    padding: 2px 6px;
-    border-bottom: unset;
-    font-size: 0.7rem;
 }
 #send-btn{
     background-image: linear-gradient(175deg, #ececec, #f1f1f1);
