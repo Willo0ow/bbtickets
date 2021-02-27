@@ -1,5 +1,5 @@
 <template>
-    <div class="card main-card">
+    <div class="card main-card" v-if="user">
         <div class="container-fluid main-box">
             <div class="card-header main-header d-flex align-items-end">
                 <div class="font-weight-bold card-title-main-btn">BBTickets</div>
@@ -30,25 +30,24 @@
 <script>
 import axios from '../axios'
 import sections from '../mixins/sections'
+import statuses from '../mixins/statuses'
     export default {
-        mixins: [sections],
+        mixins: [sections, statuses],
         data(){
             return{
                 search: '',
-                statuses: null,
-                categories:[
-                    {label:'Zgłoszone', name:'registered', tickets: 38},
-                    {label:'Zweryfikowane', name:'verified', tickets: 50},
-                    {label:'W Trakcie', name:'in_progress', tickets: 45},
-                    {label:'Do Konsultacji', name:'review', tickets: 28},
-                    {label:'Wstrzymane', name:'on_hold', tickets: 17},
-                    {label:'Ukończone', name:'closed', tickets: 20}
-                ]
+                user: null
             }
         },
-        async created() {
-            let res = await axios.get('/typestatuses/ticket')
-            this.statuses = res.data
+        methods:{
+            async retrieveUser(){
+                let res = await axios.get('/userdata')
+                this.user = res.data
+            }
+        },
+        async created(){
+            await this.retrieveUser()
+            
         }
     }
 </script>

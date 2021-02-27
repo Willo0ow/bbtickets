@@ -117,4 +117,12 @@ class TicketController extends Controller
     public function retrieveByStatus($status){
         return Ticket::where('status', $status)->get();
     }
+
+    public function retrieveUserTickets($user){
+        return Ticket::where('user', $user)->get();
+    }
+
+    public function retrieveUser(){
+        return Auth::user();
+    }
 }
