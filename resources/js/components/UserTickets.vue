@@ -1,13 +1,21 @@
 <template>
-<div>
-    <div class="row" v-for="(status, id) of $parent.statuses" :key="id">
+<div v-if="grouppedTickets">
+    <div class="row" v-for="group of grouppedTickets" :key="group.seq">
         <div class="col">
-            <div class="card section-card" :id="status.name">
-                <div class="card-header">{{status.label}}</div>
+            <div class="card section-card" :id="group.code">
+                <div class="card-header">{{group.label}}</div>
                 <div class="card-body">
-                    <div class="card ticket-card" v-for="n in status.tickets" :key="n+'ticket'+id">
-                        <div class="card-header">Temat</div>
-                        <div class="card-body"></div>
+                    <div class="card ticket-card group-header">
+                        <div class="card-body d-flex justify-content-space-between">
+                            <div :style="{width: column.width}" v-for="(column, index) of ticketColumns" :key="index">{{column.label}}</div>
+                            <div style="width:10%">Zamknięcie</div>
+                        </div>
+                    </div>
+                    <div class="card ticket-card" v-for="ticket of group.tickets" :key="`ticket${ticket.id}`">
+                        <div class="card-body d-flex justify-content-space-between">
+                            <div class="ticket-col" :style="{width: column.width}" v-for="(column, index) of ticketColumns" :key="index">{{ticket[column.value]}}</div>
+                            <div class="ticket-col" style="width:10%">{{ticket.close_date? ticket.close_date : ticket.estimated_close_date}}</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -23,13 +31,34 @@
         data(){
             return{
                 search: '',
-                tickets: null
+                tickets: null,
+                grouppedTickets: null,
+                ticketColumns:[
+                    {label: 'Temat', value: 'title', width: '20%'},
+                    //{label: 'Opis', value: 'description', width: '20%'},
+                    {label: 'Kategoria', value: 'cat_label', width: '30%'},
+                    {label: 'Osoba', value: 'assignee_name', width: '10%'},
+                    {label: 'Dział', value: 'dept_label', width: '10%'},
+                    {label: 'Priorytet', value: 'priority', width: '10%'},
+                    {label: 'Stworzono', value: 'created_at', width: '10%'}
+                ]
             }
         },
         methods:{
             async retrieveUserTickets(){
                 let res = await axios.get(`/usertickets/${this.userId}`)
                 this.tickets = res.data
+            },
+            groupTicketsByStatus(){
+                this.grouppedTickets = this.tickets.reduce((groups, ticket)=>{
+                    let ticketGroupIndex = groups.findIndex((group)=>group.code === ticket.status)
+                    if(ticketGroupIndex<0){
+                        groups.push({code: ticket.status, label: ticket.stat_label, seq: ticket.sequence, tickets:[ticket]})
+                    } else {
+                        groups[ticketGroupIndex].tickets.push(ticket)
+                    }
+                    return groups
+                }, [])
             },
             assignUserId(){
                 this.userId = this.$route.params.user
@@ -38,6 +67,8 @@
         async created(){
             this.assignUserId()
             await this.retrieveUserTickets()
+            this.groupTicketsByStatus()
+
         }
     }
 </script>
@@ -52,6 +83,9 @@
     border:none;
     border-radius: 10px;
 
+}
+.ticket-col{
+    align-self: center;
 }
 #registered{
     background-image:linear-gradient(145deg, #f5fafb, #dce4e6);
@@ -135,5 +169,11 @@
     padding: 2px 6px;
     border-bottom: unset;
     font-size: 0.7rem;
+}
+.group-header{
+        background: linear-gradient(150deg,#b1b1b1, #606060);;
+        box-shadow:  5px 5px 10px #bdbdbd,
+                -3px -3px 10px #f5f5f5 !important;
+                color: white;
 }
 </style>
