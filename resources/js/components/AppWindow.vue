@@ -16,7 +16,7 @@
                     
                 </div>
             </div>
-            <div class="card-body">
+            <div class="card-body scrollable-body">
                 <div class="container sections-container">
                     <router-view></router-view>
                 </div>
@@ -77,6 +77,10 @@ import statuses from '../mixins/statuses'
     /* background-image:radial-gradient(rgb(57, 99, 116),rgba(44, 62, 80,1)) ; */
     box-shadow:  0 0 5px #bebebe;
 }
+.scrollable-body{
+    overflow-y: scroll;
+    max-height: 90vh;
+}
 .card-title-main-btn{
     font-weight: bolder;
     font-size: 1rem;
@@ -90,9 +94,8 @@ import statuses from '../mixins/statuses'
 .search-input .form-control{
     border-radius: 20px;
     border: none;
-    background:   #f3f3f3;
-    box-shadow: inset 5px 5px 3px #dadada,
-            inset -5px -5px 3px #f3f3f3;
+    background:   #f9fcfd;
+    box-shadow:  inset 3px 3px 3px #dde3e6, inset 0px -3px 3px #f2f5f9;
 }
 .input-group-append{
     border-radius: 0px 50px 50px 0px;

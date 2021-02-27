@@ -117,9 +117,8 @@ import sections from '../mixins/sections'
 #form-box .form-control, #form-box select{
     border-radius: 20px;
     border: none;
-    background:   #f3f3f3;
-    box-shadow: inset 5px 5px 3px #dadada,
-            inset 0px -5px 3px #f3f3f3;
+    background:   #f9fcfd;
+    box-shadow:  inset 3px 3px 3px #dde3e6, inset 0px -3px 3px #f8f9fb;
 }
 #form-box select{
     min-height: 25px;
@@ -140,10 +139,9 @@ import sections from '../mixins/sections'
 
 }
 #form-box{
-    background-image:linear-gradient(145deg, #f5fafb, #dce4e6);
     background-color: unset;
-    box-shadow: inset 3px 3px 12px #aabdc0,
-    inset -3px -3px 12px #c5cbcc;
+    background-image:linear-gradient(145deg, #f5fafb, #dce4e6);
+    box-shadow: inset 3px 3px 6px #c5ccce, inset -3px -3px 6px #c1cfd2;
 }
 #form-box .card{
     background-color: unset;
@@ -170,8 +168,8 @@ import sections from '../mixins/sections'
     color: #707275;
 }
 #send-btn{
-    background-image: linear-gradient(175deg, #ececec, #f1f1f1);
-    box-shadow: 3px 4px 5px #cad1d2, -5px -7px 10px #e6e6e6;
+    background-image: linear-gradient(175deg, #f6fcff, #e6ebf1);
+    box-shadow: 3px 4px 5px #d4dee0, -5px -7px 10px #eaeff3;
     border: none;
     border-radius: 25px;
     width: 50%;
