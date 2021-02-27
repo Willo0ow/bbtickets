@@ -19,16 +19,16 @@
 
             <div class="card-body">
                 <div class="container sections-container">
-                    <div class="row">
+                    <div class="row d-flex justify-content-center">
                         <div class="col-6" >
-                            <div class="card section-card">
+                            <div class="card section-card" id="form-box">
                                 <div class="card-header">Formularz Zgłoszeniowy</div>
                                 <div class="card-body">
                                     <div class="card ticket-card" >
                                         <label for="title">Temat</label>
-                                        <input type="text" name="title" id="title" v-model="ticketForm.title">
+                                        <input type="text" class="form-control" name="title" id="title" v-model="ticketForm.title">
                                         <label for="descriptiom">Opis</label>
-                                        <textarea type="text" name="title" id="title" v-model="ticketForm.description"></textarea>
+                                        <textarea type="text" class="form-control" name="title" id="title" v-model="ticketForm.description"></textarea>
                                         <label for="department">Dział</label>
                                         <select name="department" id="department" v-model="ticketForm.department">
                                             <option v-for="(department, id) of departments" :key="id" :value="department.code" :label="department.label"></option>
@@ -37,7 +37,8 @@
                                         <select name="category" id="category" v-model="ticketForm.category">
                                             <option v-for="(category, id) of filteredCategories" :key="id" :value="category.code" :label="category.label"></option>
                                         </select>
-                                        <button @click="saveTicket">Wyślij</button>
+                                        <br />
+                                        <button id="send-btn" @click="saveTicket">Wyślij</button>
                                     </div>
                                 </div>
                             </div>
@@ -173,12 +174,16 @@ import sections from '../mixins/sections'
     font-size: 0.9rem;
     margin-right: 10px;
 }
-.search-input .form-control{
+#form-box .form-control, #form-box select{
     border-radius: 20px;
     border: none;
     background:   #f3f3f3;
     box-shadow: inset 5px 5px 3px #dadada,
-            inset -5px -5px 3px #f3f3f3;
+            inset 0px -5px 3px #f3f3f3;
+}
+#form-box select{
+    min-height: 25px;
+    padding: 3px  5px;
 }
 .input-group-append{
     border-radius: 0px 50px 50px 0px;
@@ -203,60 +208,17 @@ import sections from '../mixins/sections'
     border-radius: 10px;
 
 }
-#registered{
+#form-box{
     background-image:linear-gradient(145deg, #f5fafb, #dce4e6);
-    box-shadow: inset 3px 3px 12px #5d6d70,
-    inset -3px -3px 12px #5d6d70;
+    background-color: unset;
+    box-shadow: inset 3px 3px 12px #aabdc0,
+    inset -3px -3px 12px #c5cbcc;
 }
-#registered .ticket-card{
-        box-shadow:  5px 5px 10px #97a6ad,
-                -3px -3px 10px #fbfbfb;
+#form-box .card{
+    background-color: unset;
+
 }
-#verified{
-    background-image:linear-gradient(145deg, #9fcfe6, #489ac0);
-    box-shadow: inset 3px 3px 12px #28566b,
-    inset -3px -3px 12px #28566b;
-}
-#verified .ticket-card{
-        box-shadow:  5px 5px 10px #5a899e,
-                -3px -3px 10px #b1dbee;
-}
-#in_progress{
-    background-image:linear-gradient(145deg, #bda4da, #9969cf);
-    box-shadow: inset 3px 3px 12px #604482,
-    inset -3px -3px 12px #604482;
-}
-#in_progress .ticket-card{
-        box-shadow:  5px 5px 10px #795c99,
-                -3px -3px 10px #cab6e0;
-}
-#review{
-    background-image:linear-gradient(145deg, #eedea8, #caac47);
-    box-shadow: inset 3px 3px 12px #645627,
-    inset -3px -3px 12px #645627;
-}
-#review .ticket-card{
-        box-shadow:  5px 5px 10px #b18f1d,
-                -3px -3px 10px #f3e3ad;
-}
-#on_hold{
-    background-image:linear-gradient(145deg, #f5c7c7, #e66767);
-    box-shadow: inset 3px 3px 12px #6b2828,
-    inset -3px -3px 12px #6b2828;
-}
-#on_hold .ticket-card{
-        box-shadow:  5px 5px 10px #bd6a6a,
-                -3px -3px 10px #f1d1d1;
-}
-#closed{
-    background-image:linear-gradient(145deg, #a5efc5, #60b585);
-    box-shadow: inset 3px 3px 12px #389c63,
-    inset -3px -3px 12px #3d654e;
-}
-#closed .ticket-card{
-        box-shadow:  5px 5px 10px #269455,
-                -3px -3px 10px #bbf9d4;
-}
+
 .section-card>.card-header{
     padding: 10px;
     text-transform: uppercase;
@@ -273,10 +235,6 @@ import sections from '../mixins/sections'
     box-sizing: border-box;
     text-align: start;
     border:none;
-    border-radius: 10px;
-    background: linear-gradient(150deg, #fcfcfc, #fcfcfc);
-/*     box-shadow:  5px 5px 10px #bdbdbd,
-                -3px -3px 10px #f5f5f5; */
     margin: 10px 0;
     color: #707275;
     }
@@ -285,5 +243,16 @@ import sections from '../mixins/sections'
     padding: 2px 6px;
     border-bottom: unset;
     font-size: 0.7rem;
+}
+#send-btn{
+    background-image: linear-gradient(175deg, #ececec, #f1f1f1);
+    box-shadow: 3px 4px 5px #cad1d2, -5px -7px 10px #e6e6e6;
+    border: none;
+    border-radius: 25px;
+    width: 50%;
+    margin: 0 auto;
+}
+label{
+    margin: 10px 0 3px;
 }
 </style>
