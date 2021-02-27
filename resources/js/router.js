@@ -5,6 +5,7 @@ Vue.use(VueRouter)
 
 import ticketBoard from './components/TicketBoard'
 import ticket from './components/Ticket'
+import appWindow from './components/AppWindow'
 
 export default new VueRouter({
     mode:'history',
@@ -12,11 +13,17 @@ export default new VueRouter({
     routes:[
         {
             path:'',
-            component: ticketBoard
-        },
-        {
-            path:'/ticket/:type',
-            component: ticket
+            component: appWindow,
+            children: [
+                {
+                    path: '',
+                    component: ticketBoard
+                },
+                {
+                    path: '/ticket/:type',
+                    component: ticket
+                }
+            ]
         }
     ]
 })

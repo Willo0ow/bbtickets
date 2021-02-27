@@ -1,48 +1,24 @@
 <template>
-    <div class="card main-card">
-        <div class="container-fluid main-box">
-            <div class="card-header main-header d-flex align-items-end">
-                <div class="font-weight-bold card-title-main-btn">BBTickets</div>
-                <div class="card-title-sub-btn" :class="{'active-section': $route.path === section.path}" @click="redirectTo(section.path)" v-for="(section, idx) of sections" :key="idx">{{section.label}}</div>
-                <div class="card-title-sub-btn search-input ml-auto">
-                    <div class="input-group">
-                        <input v-model="search" type="text" class="form-control" placeholder="np. Brak okucia..." aria-label="Szukaj" aria-describedby="basic-addon1">
-                        <div class="input-group-append">
-                            <span class="input-group-text">
-                                <img src="/images/magnify.png" alt="">
-                            </span>
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
-
-            <div class="card-body">
-                <div class="container sections-container">
-                    <div class="row d-flex justify-content-center">
-                        <div class="col-6" >
-                            <div class="card section-card" id="form-box">
-                                <div class="card-header">Formularz Zgłoszeniowy</div>
-                                <div class="card-body">
-                                    <div class="card ticket-card" >
-                                        <label for="title">Temat</label>
-                                        <input type="text" class="form-control" name="title" id="title" v-model="ticketForm.title">
-                                        <label for="descriptiom">Opis</label>
-                                        <textarea type="text" class="form-control" name="title" id="title" v-model="ticketForm.description"></textarea>
-                                        <label for="department">Dział</label>
-                                        <select name="department" id="department" v-model="ticketForm.department">
-                                            <option v-for="(department, id) of departments" :key="id" :value="department.code" :label="department.label"></option>
-                                        </select>
-                                        <label for="category">Kategoria</label>
-                                        <select name="category" id="category" v-model="ticketForm.category">
-                                            <option v-for="(category, id) of filteredCategories" :key="id" :value="category.code" :label="category.label"></option>
-                                        </select>
-                                        <br />
-                                        <button id="send-btn" @click="saveTicket">Wyślij</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+    <div class="row d-flex justify-content-center">
+        <div class="col-6" >
+            <div class="card section-card" id="form-box">
+                <div class="card-header">Formularz Zgłoszeniowy</div>
+                <div class="card-body">
+                    <div class="card ticket-card" >
+                        <label for="title">Temat</label>
+                        <input type="text" class="form-control" name="title" id="title" v-model="ticketForm.title">
+                        <label for="descriptiom">Opis</label>
+                        <textarea type="text" class="form-control" name="title" id="title" v-model="ticketForm.description"></textarea>
+                        <label for="department">Dział</label>
+                        <select name="department" id="department" v-model="ticketForm.department">
+                            <option v-for="(department, id) of departments" :key="id" :value="department.code" :label="department.label"></option>
+                        </select>
+                        <label for="category">Kategoria</label>
+                        <select name="category" id="category" v-model="ticketForm.category">
+                            <option v-for="(category, id) of filteredCategories" :key="id" :value="category.code" :label="category.label"></option>
+                        </select>
+                        <br />
+                        <button id="send-btn" @click="saveTicket">Wyślij</button>
                     </div>
                 </div>
             </div>

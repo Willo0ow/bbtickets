@@ -1,13 +1,25 @@
 <template>
-    <div class="row">
-        <div class="col-2" v-for="(category, id) of categories" :key="id">
-            <div class="card section-card" :id="category.name">
-                <div class="card-header">{{category.label}}</div>
-                <div class="card-body">
-                    <div class="card ticket-card" v-for="n in category.tickets" :key="n+'ticket'+id">
-                        <div class="card-header">Temat</div>
-                        <div class="card-body"></div>
+    <div class="card main-card">
+        <div class="container-fluid main-box">
+            <div class="card-header main-header d-flex align-items-end">
+                <div class="font-weight-bold card-title-main-btn">BBTickets</div>
+                <div class="card-title-sub-btn" :class="{'active-section': $route.path === section.path}" @click="redirectTo(section.path)" v-for="(section, idx) of sections" :key="idx">{{section.label}}</div>
+                <div class="card-title-sub-btn search-input ml-auto">
+                    <div class="input-group">
+                        <input v-model="search" type="text" class="form-control" placeholder="np. Brak okucia..." aria-label="Szukaj" aria-describedby="basic-addon1">
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                                <img src="/images/magnify.png" alt="">
+                            </span>
+                        </div>
                     </div>
+                    
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="container sections-container">
+                    <router-view></router-view>
                 </div>
             </div>
         </div>
