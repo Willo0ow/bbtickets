@@ -84,6 +84,6 @@ class StatusController extends Controller
     }
     public function retrieveByType($type)
     {
-        return Status::where('type', $type)->get();
+        return Status::where('type', $type)->orderBy('sequence')->get();
     }
 }
