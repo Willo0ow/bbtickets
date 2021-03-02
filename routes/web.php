@@ -7,6 +7,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\TlogController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,9 +37,13 @@ Route::resource('/api/status', StatusController::class);
 Route::get('/api/typestatuses/{type}', [StatusController::class, 'retrieveByType']);
 Route::resource('/api/ticket', TicketController::class);
 Route::get('/api/usertickets/{user}', [TicketController::class, 'retrieveUserTickets']);
+Route::get('/api/depttickets/{dept}', [TicketController::class, 'retrieveDepartmentTickets']);
+Route::get('/api/opendepttickets/{dept}', [TicketController::class, 'retrieveOpenDepartmentTickets']);
+
 Route::get('/api/statustickets/{status}', [TicketController::class, 'retrieveByStatus']);
 Route::get('/api/ticketlogs', [TlogController::class, 'retrieveTicketLogs']);
-Route::get('/api/userdata', [TicketController::class, 'retrieveUser']);
+Route::get('/api/userdata', [UserController::class, 'retrieveUser']);
+Route::get('/api/departmentusers/{dept}', [UserController::class, 'retrieveDepartmentUsers']);
 ////
 
 Route::get('/{any}',function (){

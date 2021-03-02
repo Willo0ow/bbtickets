@@ -7,6 +7,7 @@ import ticketBoard from './components/TicketBoard'
 import ticket from './components/Ticket'
 import appWindow from './components/AppWindow'
 import userTickets from './components/UserTickets'
+import deptTickets from './components/DeptTickets'
 
 export default new VueRouter({
     mode:'history',
@@ -27,6 +28,10 @@ export default new VueRouter({
                 {
                     path: '/tickets/:user',
                     component: userTickets
+                },
+                {
+                    path: '/tickets/manage/:department',
+                    component: deptTickets
                 }
             ]
         }

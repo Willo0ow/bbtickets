@@ -79,15 +79,17 @@ class TicketController extends Controller
      * @param  \App\Models\Ticket  $ticket
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ticket $ticket)
+    public function update(Request $request, $ticket)
     {
         $user = Auth::user()->id;
         $requestData = $request->all();
-        $forms = $this->assignUserToForms($requestData);
+        $ticketForm = $requestData['ticket'];
+        $tlog = $requestData['tlog'];
+        $tlog['user'] = $user;
 
-        $updatedTicket =  Ticket::find($ticket)->update($forms['ticket']);
+        $updatedTicket =  Ticket::where('id', $ticket)->first()->update($ticketForm);
         if($updatedTicket){
-            Tlog::create($forms['tlog']);
+            Tlog::create($tlog);
         }
         return $updatedTicket;
     }
@@ -107,11 +109,11 @@ class TicketController extends Controller
         }
         return $deletedTicket;
     }
-
     public function assignUserToForms($requestData){
         $user = Auth::user()->id;
-        $requestData['ticket']['user'] = $user;
-        $requestData['tlog']['user'] = $user;
+        foreach($requestData as $formName => $formProperties){
+            $requestData[$formName]['user'] = $user;
+        }
         return $requestData;
     }
     
@@ -126,13 +128,61 @@ class TicketController extends Controller
         ->join('categories', 'categories.code', '=', 'tickets.category')
         ->join('users', 'users.id', '=', 'tickets.assignee')
         ->where('user', $user)
-        ->select('tickets.*', 'departments.label as dept_label', 'statuses.label as stat_label', 'statuses.sequence', 'categories.label as cat_label', 'users.name as assignee_name')
+        ->select('tickets.*', 'departments.label as dept_label', 'statuses.label as stat_label', 'statuses.sequence', 'categories.label as cat_label')
         ->orderBy('tickets.created_at', 'asc')
         ->get();
         return $userTickets;
     }
+    public function retrieveDepartmentTickets($dept){
+        if($dept === 'admin' || $dept === 'board'){
+            $deptTickets = DB::table('tickets')
+            ->join('departments', 'departments.code', '=', 'tickets.department')
+            ->join('statuses', 'statuses.code', '=', 'tickets.status')
+            ->join('categories', 'categories.code', '=', 'tickets.category')
+            ->join('users', 'users.id', '=', 'tickets.assignee')
+            ->select('tickets.*', 'departments.label as dept_label', 'statuses.label as stat_label', 'statuses.sequence', 'categories.label as cat_label', 'users.name as assignee_name', DB::raw('(select name from users where id = tickets.user) as user_name'))
+            ->orderBy('tickets.created_at', 'asc')
+            ->get();
 
-    public function retrieveUser(){
-        return Auth::user();
+        } else {
+
+            $deptTickets = DB::table('tickets')
+            ->join('departments', 'departments.code', '=', 'tickets.department')
+            ->join('statuses', 'statuses.code', '=', 'tickets.status')
+            ->join('categories', 'categories.code', '=', 'tickets.category')
+            ->join('users', 'users.id', '=', 'tickets.assignee')
+            ->where('tickets.department', $dept)
+            ->select('tickets.*', 'departments.label as dept_label', 'statuses.label as stat_label', 'statuses.sequence', 'categories.label as cat_label', 'users.name as assignee_name', 'users.name as user_name', DB::raw('(select name from users where id = tickets.user) as user_name'))
+            ->orderBy('tickets.created_at', 'asc')
+            ->get();
+        }
+        return $deptTickets;
+    }
+    public function retrieveOpenDepartmentTickets($dept){
+        if($dept === 'admin' || $dept === 'board'){
+            $deptTickets = DB::table('tickets')
+            ->join('departments', 'departments.code', '=', 'tickets.department')
+            ->join('statuses', 'statuses.code', '=', 'tickets.status')
+            ->join('categories', 'categories.code', '=', 'tickets.category')
+            ->join('users', 'users.id', '=', 'tickets.assignee')
+            ->select('tickets.*', 'departments.label as dept_label', 'statuses.label as stat_label', 'statuses.sequence', 'categories.label as cat_label', 'users.name as assignee_name', DB::raw('(select name from users where id = tickets.user) as user_name'))
+            ->where('tickets.status', '<>', 'closed')
+            ->orderBy('tickets.created_at', 'asc')
+            ->get();
+
+        } else {
+
+            $deptTickets = DB::table('tickets')
+            ->join('departments', 'departments.code', '=', 'tickets.department')
+            ->join('statuses', 'statuses.code', '=', 'tickets.status')
+            ->join('categories', 'categories.code', '=', 'tickets.category')
+            ->join('users', 'users.id', '=', 'tickets.assignee')
+            ->where('tickets.department', $dept)
+            ->where('tickets.status', '<>', 'closed')
+            ->select('tickets.*', 'departments.label as dept_label', 'statuses.label as stat_label', 'statuses.sequence', 'categories.label as cat_label', 'users.name as assignee_name', 'users.name as user_name', DB::raw('(select name from users where id = tickets.user) as user_name'))
+            ->orderBy('tickets.created_at', 'asc')
+            ->get();
+        }
+        return $deptTickets;
     }
 }
