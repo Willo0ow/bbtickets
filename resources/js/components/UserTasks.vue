@@ -1,12 +1,14 @@
 <template>
-    <div class="row">
-        <div class="col-2" v-for="(category, id) of categories" :key="id">
-            <div class="card section-card" :id="category.name">
-                <div class="card-header">{{category.label}}</div>
-                <div class="card-body">
-                    <div class="card ticket-card" v-for="n in category.tickets" :key="n+'ticket'+id">
-                        <div class="card-header">Temat</div>
-                        <div class="card-body"></div>
+    <div class="statuses">
+        <div class="status-column" v-for="(status, id) of statuses" :key="id">
+            <div class="card section-card" :id="status.label">
+                <div class="card-header">{{status.label}}</div>
+                <div class="card-body" v-if="tasksByStatus">
+                    <div class="card ticket-card" v-for="(task, index) of tasksByStatus[status.code]" :key="index">
+                        <div class="card-header">{{task.title}}</div>
+                        <div class="card-body">
+                            <span>{{task.cat_label}}</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -17,32 +19,56 @@
 
 <script>
 import axios from '../axios'
-import sections from '../mixins/sections'
+import statuses from '../mixins/statuses'
     export default {
-        mixins: [sections],
+        mixins: [statuses],
         data(){
             return{
                 search: '',
-                statuses: null,
-                categories:[
-                    {label:'Zgłoszone', name:'registered', tickets: 38},
-                    {label:'Zweryfikowane', name:'verified', tickets: 50},
-                    {label:'W Trakcie', name:'in_progress', tickets: 45},
-                    {label:'Do Konsultacji', name:'review', tickets: 28},
-                    {label:'Wstrzymane', name:'on_hold', tickets: 17},
-                    {label:'Ukończone', name:'closed', tickets: 20}
-                ]
+                tasks: null,
+                tasksByStatus: null,
             }
         },
-        async created() {
-            let res = await axios.get('/typestatuses/ticket')
-            this.statuses = res.data
+        computed:{
+
+        },
+        methods:{
+            async retrieveUserTasks(){
+                let res = await axios.get(`/tasks/${this.$parent.user.id}`)
+                this.tasks = res.data
+            },
+            groupTasksByStatus(){
+                this.tasksByStatus = this.tasks.reduce((groups, task)=>{
+                    groups[task.status] ? groups[task.status].push(task) : groups[task.status] = [task]
+                    return groups
+                }, {})
+            },
+            async getUserTasks(){
+                await this.retrieveUserTasks()
+                this.groupTasksByStatus()
+            }
+        },
+        async created(){
+            await this.getUserTasks()
         }
     }
 </script>
 <style scoped>
+.statuses{
+    overflow-x: auto;
+    white-space: nowrap;
+    height: 100%;
+}
+.status-column{
+    width: 20%;
+    min-width: 200px;
+    display: inline-block;
+    margin: 10px;
+    box-sizing: border-box;
+}
 .sections-container{
     max-width: 1800px;
+    height: 100%!important;
 }
 .section-card{
     height: 100%;

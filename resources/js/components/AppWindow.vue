@@ -79,6 +79,7 @@ import statuses from '../mixins/statuses'
 }
 .scrollable-body{
     overflow-y: scroll;
+    height: 100%;
     max-height: 90vh;
 }
 .card-title-main-btn{
@@ -111,6 +112,7 @@ import statuses from '../mixins/statuses'
 }
 .sections-container{
     max-width: 1800px;
+    height: 100%;
 }
 
 </style>

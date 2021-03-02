@@ -37,6 +37,7 @@ Route::resource('/api/status', StatusController::class);
 Route::get('/api/typestatuses/{type}', [StatusController::class, 'retrieveByType']);
 Route::resource('/api/ticket', TicketController::class);
 Route::get('/api/usertickets/{user}', [TicketController::class, 'retrieveUserTickets']);
+Route::get('/api/tasks/{user}', [TicketController::class, 'retrieveUserTasks']);
 Route::get('/api/depttickets/{dept}', [TicketController::class, 'retrieveDepartmentTickets']);
 Route::get('/api/opendepttickets/{dept}', [TicketController::class, 'retrieveOpenDepartmentTickets']);
 

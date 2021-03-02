@@ -185,4 +185,14 @@ class TicketController extends Controller
         }
         return $deptTickets;
     }
+    public function retrieveUserTasks($user){
+        $userTasks = DB::table('tickets')
+            ->join('categories', 'categories.code', '=', 'tickets.category')
+            ->join('users', 'users.id', '=', 'tickets.user')
+            ->where('tickets.assignee', $user)
+            ->select('tickets.*','categories.label as cat_label', 'users.name as user_name')
+            ->orderBy('tickets.created_at', 'asc')
+            ->get();
+            return $userTasks;
+    }
 }
