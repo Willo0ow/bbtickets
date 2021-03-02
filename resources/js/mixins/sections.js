@@ -8,7 +8,8 @@ export default {
                     {label: 'Przegląd', code: 'all', path:'/'},
                     {label: 'Moje Zgłoszenia', code: 'user-tickets', path:`/tickets/${this.user.id}`},
                     {label: 'Nowy Ticket', code: 'new-ticket', path: '/ticket/new'},
-                    {label: 'Zarządzanie', code: 'manage', path: `/tickets/manage/${this.user.department}`}
+                    {label: 'Zarządzanie', code: 'manage', path: `/tickets/manage/${this.user.department}`},
+                    {label: 'Moje Zadania', code: 'user-tasks', path: `/tasks/${this.user.id}`}
                 ]
             }
         }
