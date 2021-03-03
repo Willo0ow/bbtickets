@@ -3,8 +3,8 @@
         <div class="status-column" v-for="(status, id) of statuses" :key="id">
             <div class="card section-card" :id="status.label">
                 <div class="card-header">{{status.label}}</div>
-                <div class="card-body" v-if="tasksByStatus">
-                    <div class="card ticket-card" v-for="(task, index) of tasksByStatus[status.code]" :key="index">
+                <div class="card-body status-body" @drop="drop($event)" @dragover="allowDrop($event)" v-if="tasksByStatus" :id="status.code">
+                    <div class="card ticket-card" draggable="true" @dragstart="drag($event, task, index, status.code)"  v-for="(task, index) of tasksByStatus[status.code]" id="index" :key="index">
                         <div class="card-header">{{task.title}}</div>
                         <div class="card-body">
                             <span>{{task.cat_label}}</span>
@@ -20,10 +20,14 @@
 <script>
 import axios from '../axios'
 import statuses from '../mixins/statuses'
+import dragNdrop from '../mixins/dragNdrop'
     export default {
-        mixins: [statuses],
+        mixins: [statuses, dragNdrop],
         data(){
             return{
+                draggedTask: null,
+                draggedTaskIndex: null,
+                draggedTaskCurrentStatus: null,
                 search: '',
                 tasks: null,
                 tasksByStatus: null,
@@ -54,6 +58,9 @@ import statuses from '../mixins/statuses'
     }
 </script>
 <style scoped>
+.status-body{
+    min-height: 100px;
+}
 .statuses{
     overflow-x: auto;
     white-space: nowrap;
