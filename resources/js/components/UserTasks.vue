@@ -42,8 +42,9 @@ import dragNdrop from '../mixins/dragNdrop'
                 this.tasks = res.data
             },
             groupTasksByStatus(){
-                this.tasksByStatus = this.tasks.reduce((groups, task)=>{
-                    groups[task.status] ? groups[task.status].push(task) : groups[task.status] = [task]
+                this.tasksByStatus = this.statuses.reduce((groups, status)=>{
+                    const statusTasks = this.tasks.filter((task)=>task.status === status.code)
+                    groups[status.code] = statusTasks
                     return groups
                 }, {})
             },
@@ -53,6 +54,7 @@ import dragNdrop from '../mixins/dragNdrop'
             }
         },
         async created(){
+            await this.retrieveStatuses()
             await this.getUserTasks()
         }
     }
